@@ -18,7 +18,7 @@
                 <tr>
                     <td>{{ $po->rfq->product->name }}</td>
                     <td>{{ $po->rfq->quantity }}</td>
-                    <td>{{ ucfirst($po->status) }}</td>
+                    <td>{{ ucfirst($po->getStatus()) }}</td>
                     <td>
                         @if($po->status == 'pending')
                             <form action="{{ route('pos.confirm', $po->id) }}" method="POST" style="display:inline-block">

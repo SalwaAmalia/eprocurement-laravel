@@ -21,13 +21,13 @@
                     {{-- Role-based navigation --}}
                     @if (Auth::user()->role === 'admin')
                         <li class="nav-item"><a class="nav-link" href="{{ route('admin.vendors') }}">Vendor</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('admin.rfqs.index') }}">RFQ Masuk</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('admin.rfqs.index') }}">Permintaan Penawaran Masuk</a></li>
                     @elseif (Auth::user()->role === 'vendor')
                         <li class="nav-item"><a class="nav-link" href="{{ route('products.index') }}">Produk</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{ route('pos.index') }}">PO Masuk</a></li>
                     @elseif (Auth::user()->role === 'buyer')
                         <li class="nav-item"><a class="nav-link" href="{{ route('catalog') }}">Katalog</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('rfqs.index') }}">RFQ</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('rfqs.index') }}">Permintaan Penawaran</a></li>
                     @endif
 
                     <li class="nav-item">

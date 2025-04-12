@@ -16,4 +16,23 @@ class RFQ extends Model
     public function product() {
         return $this->belongsTo(Product::class);
     }
+
+    public function purchaseOrders()
+    {
+        return $this->hasMany(PurchaseOrder::class, 'rfq_id');
+    }
+    public function getStatus()
+    {
+        if ($this->purchaseOrders()->first()->status == 'declined') {
+            return 'Permintaan Ditolak oleh Vendor';
+        }
+        
+        return match ($this->status) {
+            'pending' => 'Tertunda',
+            'approved' => 'Disetujui',
+            'rejected' => 'Ditolak',
+            default => 'Tidak diketahui',
+        };
+    }
+
 }

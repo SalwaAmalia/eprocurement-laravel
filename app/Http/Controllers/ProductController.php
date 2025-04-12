@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
-    // Hanya untuk vendor
     public function index()
     {
         $products = Product::where('user_id', Auth::id())->get();
@@ -73,8 +72,6 @@ class ProductController extends Controller
         $product->delete();
         return redirect()->route('products.index')->with('success', 'Produk berhasil dihapus.');
     }
-
-    // Untuk buyer
     public function catalog(Request $request)
     {
         $query = Product::query();

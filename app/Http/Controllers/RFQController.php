@@ -26,7 +26,7 @@ class RFQController extends Controller
             'buyer_id' => auth()->id(),
             'product_id' => $request->product_id,
             'quantity' => $request->quantity,
-            'status' => 'pending',
+            'notes' => $request->notes,
         ]);
 
         return redirect()->route('rfqs.index')->with('success', 'RFQ dikirim!');

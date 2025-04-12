@@ -9,8 +9,7 @@ use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
-    // Vendor Management
-    public function vendorList()
+   public function vendorList()
     {
         $vendors = User::where('role', 'vendor')->get();
         return view('admin.vendors.index', compact('vendors'));
@@ -25,7 +24,6 @@ class AdminController extends Controller
         return back()->with('success', 'Vendor berhasil disetujui.');
     }
 
-    // RFQ Management
     public function rfqList()
     {
         $rfqs = RFQ::with('product', 'buyer')->get();
@@ -38,11 +36,9 @@ class AdminController extends Controller
         $rfq->status = 'approved';
         $rfq->save();
 
-        // Buat PO otomatis
         PurchaseOrder::create([
             'rfq_id' => $rfq->id,
             'vendor_id' => $rfq->product->user_id,
-            'status' => 'pending',
         ]);
 
         return redirect()->back()->with('success', 'RFQ disetujui dan PO dibuat.');

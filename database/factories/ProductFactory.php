@@ -9,7 +9,7 @@ class ProductFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => 2, // atau gunakan User::factory()->create()->id jika dinamis
+            'user_id' => 2,
             'name' => $this->faker->word(),
             'description' => $this->faker->sentence(),
             'price' => $this->faker->numberBetween(10000, 100000),

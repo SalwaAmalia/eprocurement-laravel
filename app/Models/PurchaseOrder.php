@@ -15,4 +15,14 @@ class PurchaseOrder extends Model
     public function vendor() {
         return $this->belongsTo(User::class, 'vendor_id');
     }
+
+    public function getStatus()
+    {        
+        return match ($this->status) {
+            'pending' => 'Tertunda',
+            'confirmed' => 'Disetujui',
+            'declined' => 'Ditolak',
+            default => 'Tidak diketahui',
+        };
+    }
 }

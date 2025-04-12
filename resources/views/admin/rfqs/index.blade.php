@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container mt-4">
-    <h3>Daftar RFQ</h3>
+    <h3>Daftar Permintaan Penawaran</h3>
 
     @if(session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
@@ -16,6 +16,7 @@
                 <th>Produk</th>
                 <th>Jumlah</th>
                 <th>Buyer</th>
+                <th>Catatan</th>
                 <th>Status</th>
                 <th>Aksi</th>
             </tr>
@@ -26,9 +27,10 @@
                     <td>{{ $rfq->product->name }}</td>
                     <td>{{ $rfq->quantity }}</td>
                     <td>{{ $rfq->buyer->name }}</td>
+                    <td>{{ $rfq->notes }}</td>
                     <td>
                         <span class="badge bg-{{ $rfq->status === 'pending' ? 'warning text-dark' : ($rfq->status === 'approved' ? 'success' : 'danger') }}">
-                            {{ ucfirst($rfq->status) }}
+                            {{ ucfirst($rfq->getStatus()) }}
                         </span>
                     </td>
                     <td>

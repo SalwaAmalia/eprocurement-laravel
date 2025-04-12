@@ -25,13 +25,16 @@ class AuthController extends Controller
         $user->name = $validated['name'];
         $user->email = $validated['email'];
         $user->role = $validated['role'];
-        $user->is_approved = false;
+        $user->is_approved = $validated['role'] === 'buyer';
         $user->password = bcrypt($validated['password']);
         $user->save();
 
-        auth()->login($user);
+        if ($user->is_approved) {
+            auth()->login($user);
+            return redirect()->route('dashboard')->with('success', 'Registrasi berhasil. Selamat datang!');
+        }
 
-        return redirect()->route('dashboard')->with('success', 'Registrasi berhasil. Tunggu persetujuan admin.');
+        return redirect()->route('login')->with('success', 'Registrasi berhasil. Akun Anda sedang menunggu verifikasi admin.');
     }
 
     public function showLogin()
@@ -44,6 +47,13 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
+            $user = Auth::user();
+
+            if ($user->role === 'vendor' && !$user->is_approved) {
+                Auth::logout();
+                return back()->withErrors(['email' => 'Akun Anda sedang dalam proses verifikasi. Mohon tunggu sebentar.']);
+            }
+
             return redirect()->route('dashboard');
         }
 
