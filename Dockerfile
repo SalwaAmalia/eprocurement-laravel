@@ -21,17 +21,19 @@ RUN docker-php-ext-install pdo pdo_mysql mbstring exif pcntl bcmath gd zip
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Set working directory
 WORKDIR /var/www
 
-# Copy project files
-COPY . /var/www
+COPY . .
 
-# Set permissions
-RUN chown -R www-data:www-data /var/www && \
-    chmod -R 755 /var/www && \
-    chmod -R 775 /var/www/storage /var/www/bootstrap/cache
+RUN composer install --no-dev --optimize-autoloader \
+    && cp .env.example .env \
+    && php artisan key:generate \
+    && php artisan config:cache \
+    && php artisan route:cache \
+    && php artisan view:cache
 
-EXPOSE 9000
+RUN chmod -R 775 storage bootstrap/cache
 
-CMD ["php-fpm"]
+EXPOSE 8080
+
+CMD php artisan serve --host=0.0.0.0 --port=8080
