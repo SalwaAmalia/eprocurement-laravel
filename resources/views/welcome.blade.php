@@ -8,7 +8,7 @@
 <body class="bg-light">
     <div class="container text-center py-5">
         <h1 class="mb-4">Selamat Datang di Sistem E-Procurement</h1>
-        <p class="mb-4">Silakan login atau register untuk melanjutkan.</p>
+        <p class="mb-4">Silahkan login atau register untuk melanjutkan.</p>
         <div class="d-grid gap-2 col-6 mx-auto">
             <a href="{{ route('login') }}" class="btn btn-primary">Login</a>
             <a href="{{ route('register') }}" class="btn btn-outline-secondary">Register</a>
