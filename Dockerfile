@@ -6,22 +6,12 @@ RUN apt-get update && apt-get install -y \
     libjpeg-dev \
     libonig-dev \
     libxml2-dev \
-    zip \
-    unzip \
-    curl \
-    git \
-    nano \
-    libzip-dev \
-    libpq-dev
-
-RUN docker-php-ext-install pdo pdo_mysql mbstring exif pcntl bcmath gd zip
+    zip unzip curl git nano libzip-dev libpq-dev \
+    && docker-php-ext-install pdo pdo_mysql mbstring exif pcntl bcmath gd zip
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-
 WORKDIR /var/www
-
 COPY . .
-
 RUN composer install --no-dev --optimize-autoloader \
     && cp .env.example .env \
     && php artisan key:generate \
@@ -29,8 +19,5 @@ RUN composer install --no-dev --optimize-autoloader \
     && php artisan route:cache \
     && php artisan view:cache
 
-RUN chmod -R 775 storage bootstrap/cache public
-
-EXPOSE 9000
-
+RUN chmod -R 775 storage bootstrap/cache
 CMD ["php-fpm"]
